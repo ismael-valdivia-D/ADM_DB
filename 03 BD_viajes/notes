@@ -1,0 +1,12 @@
+lo que no entendi de estos elementos es cuando se ingreseban : create DATETIME , modifi DATETIME , deleted TINYINT
+
+create DATETIME: indica el registro de fecha y hora de cuando se crea
+y permite saber cuando fue ingresado ese dato a la base de datos
+
+modifi DATETIME: indica el cuando fue actualizado el registro con su ultima fecha y 
+de igual forma ayuda a reconocer el cuando fue la ultima vez de cuando se actualizo 
+ese registro 
+
+deleted TINYINT: es un eliminador de lguica el cual se usa con si o no (binarios) 
+0   indica cuando el registro esta activo , y 1 que el registro a sido eliinado logicamente 
+simplemente lo marca como eliminado 
