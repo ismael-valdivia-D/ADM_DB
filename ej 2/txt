@@ -1,9 +1,9 @@
--- Mi script para crear una base de datos de ventas
+
 DROP DATABASE IF EXISTS sistema_ventas4E;
 CREATE DATABASE sistema_ventas4E;
-USE sistema_ventas4E; -- Usamos la base de datos que acabo de crear.
+USE sistema_ventas4E; 
 
--- Tabla para los tipos de usuario
+
 CREATE TABLE tipo_usuarios (
   id_tipo_usuario INT AUTO_INCREMENT PRIMARY KEY,
   nombre_tipo VARCHAR(50) NOT NULL,
@@ -15,22 +15,23 @@ CREATE TABLE tipo_usuarios (
   deleted BOOLEAN DEFAULT FALSE
 );
 
--- Tabla para los usuarios (mis personajes de videojuegos)
+
 CREATE TABLE usuarios (
   id_usuario INT AUTO_INCREMENT PRIMARY KEY,
   nombre_usuario VARCHAR(100) NOT NULL,
-  passwordd VARCHAR(255) NOT NULL, -- ¡Contraseña! (En la vida real se "hashea")
+  passwordd VARCHAR(255) NOT NULL, 
   correo VARCHAR(100) UNIQUE,
-  tipo_usuario_id INT, -- Conecta al usuario con su tipo
+  tipo_usuario_id INT, 
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   created_by INT,
   updated_by INT,
   deleted BOOLEAN DEFAULT FALSE
 );
-ALTER TABLE usuarios ADD CONSTRAINT fk_usuario_tipo_usuario FOREIGN KEY (tipo_usuario_id) REFERENCES tipo_usuarios(id_tipo_usuario);
+ALTER TABLE usuarios ADD CONSTRAINT fk_usuario_tipo_usuario 
+FOREIGN KEY (tipo_usuario_id) REFERENCES tipo_usuarios(id_tipo_usuario);
 
--- Tabla para los productos
+
 CREATE TABLE productos (
   id_productos INT AUTO_INCREMENT PRIMARY KEY,
   nombre_productos VARCHAR(100) NOT NULL,
@@ -43,10 +44,10 @@ CREATE TABLE productos (
   deleted BOOLEAN DEFAULT FALSE
 );
 
--- Tabla para las ventas
+
 CREATE TABLE ventas (
   id_ventas INT AUTO_INCREMENT PRIMARY KEY,
-  usuario_id INT NOT NULL, -- Quién hizo la venta (el vendedor)
+  usuario_id INT NOT NULL, 
   fecha_venta DATETIME,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -54,9 +55,10 @@ CREATE TABLE ventas (
   updated_by INT,
   deleted BOOLEAN DEFAULT FALSE
 );
-ALTER TABLE ventas ADD CONSTRAINT fk_ventas_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id_usuario);
+ALTER TABLE ventas ADD CONSTRAINT fk_ventas_usuario 
+FOREIGN KEY (usuario_id) REFERENCES usuarios(id_usuario);
 
--- Tabla para los detalles de cada venta
+
 CREATE TABLE detalle_ventas (
   id_detalle_ventas INT AUTO_INCREMENT PRIMARY KEY,
   venta_id INT,
@@ -69,16 +71,18 @@ CREATE TABLE detalle_ventas (
   updated_by INT,
   deleted BOOLEAN DEFAULT FALSE
 );
-ALTER TABLE detalle_ventas ADD CONSTRAINT fk_detalle_ventas_venta FOREIGN KEY (venta_id) REFERENCES ventas(id_ventas);
-ALTER TABLE detalle_ventas ADD CONSTRAINT fk_detalle_ventas_producto FOREIGN KEY (producto_id) REFERENCES productos(id_productos);
+ALTER TABLE detalle_ventas 
+ADD CONSTRAINT fk_detalle_ventas_venta FOREIGN KEY (venta_id) REFERENCES ventas(id_ventas);
+ALTER TABLE detalle_ventas 
+ADD CONSTRAINT fk_detalle_ventas_producto FOREIGN KEY (producto_id) REFERENCES productos(id_productos);
 
--- ¡A insertar datos!
 
--- Usuario principal del sistema
+
+
 INSERT INTO usuarios (nombre_usuario, passwordd, correo, tipo_usuario_id, created_by, updated_by)
 VALUES ('MasterChief', 'cortana_protocol', 'system.forge@halonet.com', NULL, NULL, NULL);
 
--- Tipos de usuario
+
 INSERT INTO tipo_usuarios (nombre_tipo, descripcion_tipo, created_by, updated_by)
 VALUES
     ('Administrador', 'Control total sobre el reino.', 1, 1),
@@ -86,7 +90,7 @@ VALUES
     ('Aventurero', 'Explora y adquiere objetos.', 1, 1),
     ('Líder de Gremio', 'Organiza expediciones.', 1, 1);
 
--- Mis usuarios (personajes de videojuegos)
+
 INSERT INTO usuarios (nombre_usuario, passwordd, correo, tipo_usuario_id, created_by, updated_by)
 VALUES
     ('LaraCroft', 'tomb_raider_pass', 'lara.croft@tombraider.com', 2, 1, 1), -- Vendedora
@@ -94,7 +98,7 @@ VALUES
     ('CommanderShepard', 'normandy_access', 'shepard.alliance@masseffect.com', 4, 1, 1), -- Líder de Gremio
     ('Kratos', 'olympus_rage', 'kratos.olympus@godofwar.com', 1, 1, 1); -- Administrador
 
--- Productos fantásticos
+
 INSERT INTO productos (nombre_productos, precio, stock, created_by, updated_by)
 VALUES
     ('Poción de Salud Mayor', 15000.00, 80, 5, 5),
@@ -103,7 +107,7 @@ VALUES
     ('Fruto Dorado de Hyrule', 8000.00, 40, 5, 5),
     ('Panal de Abejas Silvestres', 1200.00, 100, 5, 5);
 
--- Ventas (LaraCroft es la vendedora)
+
 INSERT INTO ventas (usuario_id, fecha_venta, created_by, updated_by)
 VALUES
     (2, '2025-05-28 10:30:00', 2, 2),
@@ -112,7 +116,7 @@ VALUES
     (2, '2025-06-01 11:45:00', 2, 2),
     (2, '2025-06-02 12:30:00', 2, 2);
 
--- Detalles de las ventas
+
 INSERT INTO detalle_ventas (venta_id, producto_id, cantidad_vendida, precio_unitario, created_by, updated_by)
 VALUES
     (1, 1, 2, 15000.00, 2, 2),
@@ -122,7 +126,7 @@ VALUES
     (4, 5, 10, 1200.00, 2, 2),
     (5, 1, 1, 15000.00, 2, 2);
 
--- ¡Para ver si todo salió bien!
+
 SELECT * FROM tipo_usuarios;
 SELECT * FROM usuarios;
 SELECT * FROM productos;
