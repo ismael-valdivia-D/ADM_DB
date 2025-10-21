@@ -377,3 +377,15 @@ BEGIN
 END //
 
 DELIMITER ;
+
+-- Ejemplo para TIPO_GENERO
+CALL sp_insertar_tipo_genero('No Binario');
+CALL sp_mostrar_tipo_genero_activos();
+CALL sp_borrado_logico_tipo_genero(1);
+CALL sp_mostrar_todos_tipo_genero();
+
+-- Ejemplo para PERSONAS
+CALL sp_insertar_persona('Carlos López', 'carlos@mail.com', '12345678-9', '987654321', '1995-03-15', 2, 1, 'Ninguna');
+CALL sp_mostrar_personas_activas();
+CALL sp_borrado_logico_persona(1);
+CALL sp_mostrar_todas_personas();
